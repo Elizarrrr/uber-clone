@@ -125,4 +125,115 @@
     );
     }
 
+3.  modal.tsx
+    C:\Users\joyli\Downloads\VS Code Projects\uber-clone\app\modal.tsx
 
+    import { Link } from 'expo-router';
+    import { StyleSheet } from 'react-native';
+
+    import { ThemedText } from '@/components/themed-text';
+    import { ThemedView } from '@/components/themed-view';
+
+    export default function ModalScreen() {
+    return (
+        <ThemedView style={styles.container}>
+        <ThemedText type="title">This is a modal</ThemedText>
+        <Link href="/" dismissTo style={styles.link}>
+            <ThemedText type="link">Go to home screen</ThemedText>
+        </Link>
+        </ThemedView>
+    );
+    }
+
+    const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+    },
+    link: {
+        marginTop: 15,
+        paddingVertical: 15,
+    },
+    });
+
+4.  app.json
+    {
+    "expo": {
+        "name": "uber-clone",
+        "slug": "uber-clone",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/icon.png",
+        "scheme": "uberclone",
+        "userInterfaceStyle": "automatic",
+        "newArchEnabled": true,
+        "ios": {
+        "supportsTablet": true
+        },
+        "android": {
+        "adaptiveIcon": {
+            "backgroundColor": "#E6F4FE",
+            "foregroundImage": "./assets/images/android-icon-foreground.png",
+            "backgroundImage": "./assets/images/android-icon-background.png",
+            "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        },
+        "edgeToEdgeEnabled": true,
+        "predictiveBackGestureEnabled": false
+        },
+        "web": {
+        "output": "static",
+        "favicon": "./assets/images/favicon.png"
+        },
+        "plugins": [
+        "expo-router",
+        [
+            "expo-splash-screen",
+            {
+            "image": "./assets/images/splash-icon.png",
+            "imageWidth": 200,
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff",
+            "dark": {
+                "backgroundColor": "#000000"
+            }
+            }
+        ]
+        ],
+        "experiments": {
+        "typedRoutes": true,
+        "reactCompiler": true
+        }
+    }
+    }
+
+5.  _layout.tsx
+
+    import { useFonts } from "expo-font";
+    import { Stack } from "expo-router";
+    import "react-native-reanimated";
+    import "../global.css";
+
+    export const unstable_settings = {
+    anchor: "(tabs)",
+    };
+
+    export default function RootLayout() {
+    const [loaded] = useFonts({
+        "Jakarta-Bold": require("../assets/fonts/PlusJakartaSans-Bold.ttf"),
+        "Jakarta-ExtraBold": require("../assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
+        "Jakarta-ExtraLight": require("../assets/fonts/PlusJakartaSans-ExtraLight.ttf"),
+        "Jakarta-Light": require("../assets/fonts/PlusJakartaSans-Light.ttf"),
+        "Jakarta-Medium": require("../assets/fonts/PlusJakartaSans-Medium.ttf"),
+        "Jakarta-Regular": require("../assets/fonts/PlusJakartaSans-Regular.ttf"),
+        "Jakarta-SemiBold": require("../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
+    });
+
+    return (
+        <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+        </Stack>
+    );
+    }
