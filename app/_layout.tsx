@@ -6,7 +6,8 @@ import "react-native-reanimated";
 import "../global.css";
 
 import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
-import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import { tokenCache } from "@/lib/auth";
+// import { tokenCache } from "@clerk/clerk-expo/token-cache";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
