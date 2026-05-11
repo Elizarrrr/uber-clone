@@ -48,12 +48,12 @@ const SignUp = () => {
 
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: "verification.code",
+        code: verification.code,
       });
 
       if (completeSignUp.status === "complete") {
         // TODO: Create a database user!
-        
+
         await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "success" });
       } else {
