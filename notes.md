@@ -237,3 +237,100 @@
         </Stack>
     );
     }
+
+6.  structure of components
+
+    const ComponentName = () => ();
+
+    export default ComponentName;
+
+7.  C:\Users\joyli\Downloads\VS Code Projects\uber-clone\lib\auth.ts
+    export interface TokenCache {
+    getToken: (key: string) => Promise<string | undefined | null>;
+    saveToken: (key: string, token: string) => Promise<void>;
+    clearToken: (key: string) => void;
+    }
+
+8.  C:\Users\joyli\Downloads\VS Code Projects\uber-clone\app\(root)\(tabs)\home.tsx
+    import { Show, useUser } from '@clerk/expo'
+    import { useClerk } from '@clerk/expo'
+    import { Link } from 'expo-router'
+    import { Text, View, Pressable, StyleSheet } from 'react-native'
+
+    export default function Page() {
+    const { user } = useUser()
+    const { signOut } = useClerk()
+
+    return (
+        <View style={styles.container}>
+        <Text style={styles.title}>Welcome!</Text>
+        <Show when="signed-out">
+            <Link href="/(auth)/sign-in">
+            <Text>Sign in</Text>
+            </Link>
+            <Link href="/(auth)/sign-up">
+            <Text>Sign up</Text>
+            </Link>
+        </Show>
+        <Show when="signed-in">
+            <Text>Hello {user?.emailAddresses[0].emailAddress}</Text>
+            <Pressable style={styles.button} onPress={() => signOut()}>
+            <Text style={styles.buttonText}>Sign out</Text>
+            </Pressable>
+        </Show>
+        </View>
+    )
+    }
+
+9.  C:\Users\joyli\Downloads\VS Code Projects\uber-clone\app\(auth)\sign-up.tsx
+const handleSubmit = async () => {
+    const { error } = await signUp.password({
+      emailAddress,
+      password,
+    })
+    if (error) {
+      console.error(JSON.stringify(error, null, 2))
+      return
+    }
+
+    if (!error) await signUp.verifications.sendEmailCode()
+  }
+
+  const handleVerify = async () => {
+    await signUp.verifications.verifyEmailCode({
+      code,
+    })
+    if (signUp.status === 'complete') {
+      await signUp.finalize({
+        // Redirect the user to the home page after signing up
+        navigate: ({ session, decorateUrl }) => {
+          if (session?.currentTask) {
+            // Handle pending session tasks
+            // See https://clerk.com/docs/guides/development/custom-flows/authentication/session-tasks
+            console.log(session?.currentTask)
+            return
+          }
+
+          const url = decorateUrl('/')
+          if (url.startsWith('http')) {
+            window.location.href = url
+          } else {
+            router.push(url as Href)
+          }
+        },
+      })
+    } else {
+      // Check why the sign-up is not complete
+      console.error('Sign-up attempt not complete:', signUp)
+    }
+  }
+
+  if (signUp.status === 'complete' || isSignedIn) {
+    return null
+  }
+
+  if (
+    signUp.status === 'missing_requirements' &&
+    signUp.unverifiedFields.includes('email_address') &&
+    signUp.missingFields.length === 0
+  ) 
