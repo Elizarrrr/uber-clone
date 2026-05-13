@@ -365,3 +365,17 @@
     ]
     }
 
+11. app.json
+    
+    "web": {
+        "output": "server",
+        "favicon": "./assets/images/favicon.png"
+        },
+
+    "plugins": [
+        [
+            "expo-router",
+            {
+            "origin": "https://uber.com/"
+            }
+        ],
