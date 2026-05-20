@@ -17,13 +17,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false,
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCUP6gc4i5gV9qC8wuFflcOUS7LzgZ9Zfc"
-        }
-      },
-      "package": "com.anonymous.uber"
+      "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
