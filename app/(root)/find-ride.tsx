@@ -1,6 +1,10 @@
+import CustomButton from "@/components/CustomButton";
+import GoogleTextInput from "@/components/GoogleTextInput";
 import RideLayout from "@/components/RideLayout";
+import { icons } from "@/constants";
 import { useLocationStore } from "@/store";
-import { Text } from "react-native";
+import { router } from "expo-router";
+import { Text, View } from "react-native";
 
 const FindRide = () => {
   const {
@@ -11,8 +15,34 @@ const FindRide = () => {
   } = useLocationStore();
 
   return (
-    <RideLayout>
-      <Text className="text-2xl">Find Ride</Text>
+    <RideLayout title="Ride" snapPoints={["85%"]}>
+      <View className="my-3">
+        <Text className="mb-3 font-JakartaSemiBold text-lg">From</Text>
+        <GoogleTextInput
+          icon={icons.target}
+          initialLocation={userAddress!}
+          containerStyle="bg-neutral-100"
+          textInputBackgroundColor="#f5f5f5"
+          handlePress={(location) => setUserLocation(location)}
+        />
+      </View>
+
+      <View className="my-3">
+        <Text className="mb-3 font-JakartaSemiBold text-lg">To</Text>
+        <GoogleTextInput
+          icon={icons.map}
+          initialLocation={destinationAddress!}
+          containerStyle="bg-neutral-100"
+          textInputBackgroundColor="transparent"
+          handlePress={(location) => setDestinationLocation(location)}
+        />
+      </View>
+
+      <CustomButton
+        title="Find now"
+        onPress={() => router.push("/(root)/confirm-ride")}
+        className="mt-5"
+      />
     </RideLayout>
   );
 };
